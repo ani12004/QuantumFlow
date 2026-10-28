@@ -100,3 +100,7 @@ Implemented `src/simulation/traffic_state_adapter.py`. It accepts only `traffic-
 The simulation runner now selects four strategies: fixed_time, classical_adaptive, classical_exact and qaoa. All retain the existing SUMO phase schedule and clearances. A one-seed paired SUMO smoke run (`reports/phase3_smoke`, ignored by Git) completed 438 vehicles per controller with zero unfinished vehicles: fixed-time 33.37s mean wait, adaptive 10.76s, exact 10.10s and QAOA 10.10s. This is synthetic one-seed evidence only.
 
 Verification: 52 passed in 9.53s. Remaining Phase 3 evaluation work is multi-profile/multi-seed statistical comparison and live-video adapter gating, which belongs to the later experimental/integration phases.
+
+## Phase 4 integration foundation
+
+Added `TrafficStateReplay` for streaming ordered `traffic-state/v1` JSONL, causal window-close availability, duplicate/unordered rejection and replay exhaustion handling. Added `run_integrated_experiment.py`, which validates approach mapping, adapts eligible replay observations and logs adaptive decisions/fallbacks without injecting replayed arrivals into SUMO demand. A synthetic replay smoke run generated two decisions: one valid adaptive decision and one fixed-time fallback after replay exhaustion. Verification: 54 passed in 9.43s. Full replay-driven paired SUMO metric evaluation remains the next integration task; no physical signal control exists.
