@@ -64,3 +64,29 @@ Result: `42 passed in 9.88s`. This matches the prior saved 42-test baseline.
 ## Phase 2 status
 
 Not started. Phase 2 begins after the initial Git checkpoint.
+
+## Phase 2 progress
+
+Implemented QF-03 to QF-05 as an offline, uncalibrated foundation in `src/vision/traffic.py`.
+
+- `CentroidTracker` assigns deterministic persistent IDs to supported COCO vehicle classes by same-class IoU matching.
+- `TrafficStateAggregator` uses configurable queue polygons and crossing lines, counts one crossing per track/approach, and outputs the documented `traffic-state/v1` event envelope.
+- `configs/traffic_regions.example.json` is a camera-specific pixel-coordinate example, not Bengaluru geometry.
+- `tests/test_traffic_analytics.py` uses synthetic boxes only; no real-world CV accuracy is claimed.
+
+Verification on 28 October 2026:
+
+```powershell
+$env:QF_TEST_TEMP='D:\AI\capstone project\quantumflow-blr\tmp\test-runs-new'
+.\.venv\Scripts\python.exe scripts\run_tests.py
+```
+
+Result: `46 passed in 8.76s`.
+
+Remaining Phase 2 work: a permitted recorded traffic clip, per-camera region configuration, manual count reference, tracker error analysis and a replay/export adapter. The current module is intentionally not connected to SUMO, QUBO, QAOA or the dashboard.
+
+## Phase 2 completion (engineering)
+
+Added a streaming OpenCV replay pipeline (`src/vision/replay.py`) and CLI (`scripts/replay_traffic.py`). It uses video-relative timestamps, the existing YOLOv10 detector, persistent tracking, configurable traffic regions, crossing aggregation and uncalibrated queue estimates. It writes JSONL traffic state, crossing CSV and summary JSON without saving frames. Added manual-count evaluation (`scripts/evaluate_traffic.py`) and `VIDEO_ANALYTICS.md`.
+
+No permitted traffic video exists in the repository. Real video/count accuracy validation remains blocked; synthetic fixtures validate configuration, serialization-adjacent state output, count evaluation and missing-video handling.

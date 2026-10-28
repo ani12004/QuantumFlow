@@ -1,0 +1,10 @@
+﻿{
+  "schema_version": "traffic-regions/v1",
+  "description": "Example pixel-coordinate regions for an individual recorded video. Replace for each camera; these are not Bengaluru geometry.",
+  "approaches": {
+    "N": {
+      "queue_polygon": [[0, 0], [320, 0], [320, 240], [0, 240]],
+      "crossing_line": [[0, 220], [320, 220]]
+    }
+  }
+}
