@@ -1,0 +1,9 @@
+{
+  "source_id": "synthetic_example_state",
+  "observation_type": "Simulation",
+  "simulation_seconds": 72,
+  "approach_order": ["N", "S", "E", "W"],
+  "queue_length_vehicles": [14, 12, 3, 2],
+  "arrival_rate_veh_per_hour": [900, 900, 180, 180],
+  "note": "Hand-specified synthetic input for exercising the optimizer. Not measured Bengaluru traffic."
+}

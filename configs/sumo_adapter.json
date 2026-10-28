@@ -1,0 +1,14 @@
+{
+  "input_type": "normalized_demand",
+  "route_mapping_verified": false,
+  "routes": {},
+  "route_edges": {},
+  "calibration": {
+    "vehicles_per_hour_at_unit_demand": null,
+    "evidence": null,
+    "valid_geographic_scope": null,
+    "valid_time_scope": null,
+    "approved_by": null
+  },
+  "note": "Intentionally non-executable until routes and calibration are independently verified. No fabricated measured values."
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["timestamp", "intersection_id", "approach_id", "source_id", "observation_type"],
+  "properties": {
+    "timestamp": {"type": "string", "format": "date-time"},
+    "intersection_id": {"type": "string", "minLength": 1},
+    "approach_id": {"type": "string", "minLength": 1},
+    "vehicle_count": {"type": ["integer", "null"], "minimum": 0, "description": "Vehicles per observation_interval_seconds; never infer from normalized demand"},
+    "observation_interval_seconds": {"type": ["number", "null"], "exclusiveMinimum": 0},
+    "arrival_rate_veh_per_hour": {"type": ["number", "null"], "minimum": 0},
+    "queue_length_vehicles": {"type": ["number", "null"], "minimum": 0},
+    "mean_speed_kmh": {"type": ["number", "null"], "minimum": 0},
+    "waiting_time_seconds": {"type": ["number", "null"], "minimum": 0},
+    "signal_phase": {"type": ["string", "null"]},
+    "source_id": {"type": "string", "minLength": 1},
+    "observation_type": {"enum": ["Verified real observation", "Reported real observation, unverified", "Model estimate", "Simulation", "Synthetic", "Unknown"]},
+    "field_provenance": {"type": "object", "description": "Per-field source ID, original units, conversion and calibration; required when fields come from multiple sources."}
+  },
+  "description": "Unavailable fields are null or absent. All timestamps require an explicit timezone offset."
+}

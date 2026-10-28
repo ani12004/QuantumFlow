@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "QuantumFlow traffic state to future QUBO interface (no optimizer)",
+  "type": "object",
+  "required": ["intersection_id", "valid_phases", "traffic_state", "optimization_horizon_seconds", "phase_compatibility", "minimum_green_seconds", "maximum_green_seconds", "penalties", "coordination", "source_id", "phase_constraints_verified"],
+  "properties": {
+    "intersection_id": {"type": "string", "minLength": 1},
+    "source_id": {"type": "string", "minLength": 1},
+    "phase_constraints_verified": {"const": true},
+    "valid_phases": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"type": "string"}},
+    "optimization_horizon_seconds": {"type": "number", "exclusiveMinimum": 0},
+    "traffic_state": {"type": "array", "minItems": 1, "items": {"$ref": "traffic_state.schema.json"}},
+    "phase_compatibility": {"type": "array", "items": {"type": "array", "items": {"enum": [0, 1]}}},
+    "minimum_green_seconds": {"type": "object", "additionalProperties": {"type": "number", "exclusiveMinimum": 0}},
+    "maximum_green_seconds": {"type": "object", "additionalProperties": {"type": "number", "exclusiveMinimum": 0}},
+    "penalties": {"type": "object", "required": ["queue", "delay"], "properties": {"queue": {"type": "number", "minimum": 0}, "delay": {"type": "number", "minimum": 0}}},
+    "coordination": {"type": "object", "description": "Neighbor junction IDs, offsets in seconds and their provenance; empty only for an isolated junction."}
+  },
+  "description": "Runtime validator also checks matrix dimensions/symmetry and green bounds <= horizon. No unknown constraint should be interpreted as safe."
+}

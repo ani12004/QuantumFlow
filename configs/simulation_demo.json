@@ -1,0 +1,28 @@
+{
+  "scenario_id": "synthetic_four_approach_v1",
+  "observation_type": "Simulation",
+  "description": "Synthetic isolated straight-through junction. No real Bengaluru location, calibration or field phase plan is claimed.",
+  "seeds": [11, 22, 33],
+  "demand_seconds": 720,
+  "drain_seconds": 240,
+  "warmup_seconds": 72,
+  "arm_length_m": 300,
+  "speed_m_per_s": 13.89,
+  "cycle_seconds": 72,
+  "yellow_seconds": 3,
+  "all_red_seconds": 1,
+  "green_options_ns_seconds": [16, 24, 32, 40, 48],
+  "fixed_green_ns_seconds": 32,
+  "minimum_green_seconds": 16,
+  "maximum_green_seconds": 48,
+  "planning_cycles": 2,
+  "saturation_flow_veh_per_second_per_lane": 0.5,
+  "terminal_queue_weight_seconds_per_vehicle": 2.0,
+  "split_change_weight_vehicle_seconds_per_second_squared": 0.05,
+  "arrival_estimator_window_seconds": 72,
+  "demand_profiles": [
+    {"begin_seconds": 0, "end_seconds": 360, "N": 900, "S": 900, "E": 180, "W": 180},
+    {"begin_seconds": 360, "end_seconds": 720, "N": 180, "S": 180, "E": 900, "W": 900}
+  ],
+  "qaoa": {"layers": 2, "shots": 256, "restarts": 3, "max_iterations": 100, "optimizer_seed": 42}
+}

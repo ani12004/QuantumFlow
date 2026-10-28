@@ -1,0 +1,4 @@
+# Install after requirements.txt. All additional files stay project-local in .deps.
+eclipse-sumo==1.28.0
+traci==1.28.0
+sumolib==1.28.0

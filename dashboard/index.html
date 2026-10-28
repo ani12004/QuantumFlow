@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>QuantumFlow BLR · Traffic research workspace</title><meta name="description" content="Local dashboard for inspecting traffic data, SUMO experiments, classical control and simulated QAOA."><link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script></head>
+<body>
+<aside class="sidebar"><a class="brand" href="#overview"><span class="brand-icon">Q<span>↗</span></span><span>QuantumFlow<small>BENGALURU RESEARCH LAB</small></span></a>
+<div class="nav-caption">WORKSPACE</div><nav aria-label="Main navigation">
+<a href="#overview" data-page="overview"><span>▦</span> Control room</a>
+<a href="#replay" data-page="replay"><span>⤨</span> Junction replay</a>
+<a href="#quantum" data-page="quantum"><span>◈</span> Quantum lab</a>
+<a href="/camera"><span>◎</span> Camera detection</a>
+<a href="#data" data-page="data"><span>▤</span> Data explorer</a>
+<a href="#evidence" data-page="evidence"><span>☷</span> Evidence & reports</a>
+</nav>
+<div class="side-note"><span class="status-dot"></span> Local workspace<p>Your files and experiments<br>stay on this computer.</p><div class="side-divider"></div><strong>Simulation environment</strong><p>QAOA runs on a classical CPU.<br>No quantum hardware connected.</p></div>
+<div class="side-bottom"><span class="avatar">QF</span><div>QuantumFlow–BLR<small>Capstone research workspace</small></div></div></aside>
+<div class="shell"><header class="topbar"><div class="breadcrumb">WORKSPACE <span>/</span> <b id="crumb">Control room</b></div><div class="top-actions"><span class="badge subtle"><span class="status-dot"></span> Local</span><label class="sr-only" for="experiment">Experiment</label><select id="experiment"><option value="reference">Reference experiment · 3 seeds</option></select><button class="button primary" id="new-experiment">＋ New experiment</button></div></header>
+<main id="main"><div class="loading"><div class="spinner"></div><h2>Opening your research workspace</h2><p>Reading saved experiment results and dataset provenance…</p></div></main>
+<footer>QUANTUMFLOW–BLR <span>Inspect the evidence. Understand the limits.</span><span class="badge">SIMULATED TRAFFIC · RESEARCH USE</span></footer></div>
+<div id="toast" role="status" aria-live="polite"></div>
+<div id="drawer-overlay" class="overlay hidden"></div><aside id="drawer" class="drawer hidden" aria-label="Record inspector"><button class="icon-button close-drawer" aria-label="Close inspector">✕</button><p class="eyebrow">RECORD INSPECTOR</p><h2 id="drawer-title"></h2><pre id="drawer-content"></pre></aside>
+<dialog id="experiment-dialog"><button class="icon-button dialog-close" aria-label="Close">✕</button><p class="eyebrow">A NEW LOCAL RUN</p><h2>Compare all three controllers</h2><p>Run fixed-time, exact classical QUBO and simulated QAOA on identical synthetic vehicle arrivals. Existing results are preserved.</p><label for="seed-preset">Arrival seeds</label><select id="seed-preset"><option value="11">Quick comparison · seed 11</option><option value="11,22,33">Full comparison · seeds 11, 22, 33</option></select><div class="notice">Synthetic junction only. This runs SUMO locally and can take a few minutes.</div><button class="button primary full" id="start-experiment">Run SUMO comparison <span>↗</span></button><p id="experiment-status" class="muted" aria-live="polite"></p></dialog>
+<div id="chart-tooltip" class="chart-tooltip hidden"></div>
+</body></html>

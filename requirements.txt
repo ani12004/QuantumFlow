@@ -1,0 +1,9 @@
+pandas==3.0.6
+numpy==2.4.6
+scikit-learn==1.9.1
+scipy==1.17.1
+catboost==1.2.10
+geopandas==1.2.0
+requests==2.34.2
+matplotlib==3.11.2
+pytest==9.1.1
