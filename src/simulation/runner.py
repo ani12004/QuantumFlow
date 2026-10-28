@@ -8,6 +8,7 @@ import traci.constants as tc
 from src.ingestion import sha256
 from src.optimization.qubo import APPROACHES,build_qubo,solve_exact,phase_schedule
 from src.optimization.qaoa import solve_qaoa,qasm
+from src.optimization.adaptive import choose_green_ns
 from src.simulation.scenario import executable,build_network,make_demand,validate_config
 
 def signal_states(net):
@@ -54,10 +55,12 @@ def run_controller(root,c,net,routes,vehicles,seed,controller,output):
                     build_start=time.perf_counter();qubo=build_qubo(queues,arrivals,c);build_wall=time.perf_counter()-build_start
                     solve_start=time.perf_counter()
                     if controller=='qaoa':solution=solve_qaoa(qubo,c['qaoa'],c['qaoa']['optimizer_seed']+seed*100+cycle)
-                    else:solution=solve_exact(qubo)
+                    elif controller=='classical_exact':solution=solve_exact(qubo)
+                    else:
+                        adaptive=choose_green_ns(queues,arrivals,c); solution={'solver':'queue_proportional_adaptive','greens_ns_seconds':[adaptive['green_ns_seconds']],**adaptive}
                     solver_wall=time.perf_counter()-solve_start
                     # Reference computed after QAOA parameter fitting/sampling; used only for reporting gaps.
-                    reference=solve_exact(qubo);gap=max(0.,solution['energy']-reference['energy'])
+                    reference=solve_exact(qubo);gap=max(0.,solution.get('energy',reference['energy'])-reference['energy'])
                     green=int(solution['greens_ns_seconds'][0])
                     decision={'simulation_seconds':step,'source_id':c['scenario_id'],'observation_type':'Simulation',
                               'queues_vehicles':queues.tolist(),'estimated_entry_rates_veh_per_second':arrivals.tolist(),
@@ -139,7 +142,7 @@ def run_experiment(root,c,output):
     for seed in c['seeds']:
         route=scenario/f'demand_seed_{seed}.rou.xml';vehicles=make_demand(c,seed,route)
         pd.DataFrame(vehicles).assign(source_id=c['scenario_id'],observation_type='Simulation').to_csv(scenario/f'demand_seed_{seed}.csv',index=False)
-        for controller in ['fixed_time','classical_exact','qaoa']:
+        for controller in ['fixed_time','classical_adaptive','classical_exact','qaoa']:
             print(f'Running {controller}, seed {seed}, {len(vehicles)} simulated vehicles',flush=True)
             result=run_controller(root,c,net,route,vehicles,seed,controller,output);all_results.append(result)
             pd.DataFrame(all_results).to_csv(output/'controller_results.csv',index=False)

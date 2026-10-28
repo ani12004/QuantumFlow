@@ -90,3 +90,13 @@ Remaining Phase 2 work: a permitted recorded traffic clip, per-camera region con
 Added a streaming OpenCV replay pipeline (`src/vision/replay.py`) and CLI (`scripts/replay_traffic.py`). It uses video-relative timestamps, the existing YOLOv10 detector, persistent tracking, configurable traffic regions, crossing aggregation and uncalibrated queue estimates. It writes JSONL traffic state, crossing CSV and summary JSON without saving frames. Added manual-count evaluation (`scripts/evaluate_traffic.py`) and `VIDEO_ANALYTICS.md`.
 
 No permitted traffic video exists in the repository. Real video/count accuracy validation remains blocked; synthetic fixtures validate configuration, serialization-adjacent state output, count evaluation and missing-video handling.
+
+## Phase 3 completion
+
+Implemented a deterministic queue-proportional classical adaptive controller in `src/optimization/adaptive.py`. It allocates the available NS/EW green split from current queues plus one cycle of observed arrival rates, clamps to the existing min/max bounds, and returns fixed-time fallback for invalid state.
+
+Implemented `src/simulation/traffic_state_adapter.py`. It accepts only `traffic-state/v1` events, validates source mode, timestamp, window, mapping, confidence, nonnegative finite counts/queues, freshness and complete N/S/E/W coverage. It returns ordered queues and arrival rates in vehicles/second or a documented ineligible reason. It is not wired to live camera control.
+
+The simulation runner now selects four strategies: fixed_time, classical_adaptive, classical_exact and qaoa. All retain the existing SUMO phase schedule and clearances. A one-seed paired SUMO smoke run (`reports/phase3_smoke`, ignored by Git) completed 438 vehicles per controller with zero unfinished vehicles: fixed-time 33.37s mean wait, adaptive 10.76s, exact 10.10s and QAOA 10.10s. This is synthetic one-seed evidence only.
+
+Verification: 52 passed in 9.53s. Remaining Phase 3 evaluation work is multi-profile/multi-seed statistical comparison and live-video adapter gating, which belongs to the later experimental/integration phases.

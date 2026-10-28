@@ -77,3 +77,9 @@ python scripts/report_quantum_demo.py
 The working demo compares fixed-time, exact QUBO and QAOA controllers on one straight-through isolated junction with synthetic passenger-car arrivals. It records raw outputs, uses paired seeds, counts waiting outside network insertion, and retains all outcomes rather than selecting the best run.
 
 Real Bengaluru optimization still requires licensed approach/turning counts with timestamps, verified road and camera mapping, calibrated saturation flow, complete signal/pedestrian/turn conflicts, wider validation and field safety review. The existing CatBoost remains a separate normalized-demand benchmark. The earlier dataset quality report describes real-data readiness and should not be read as a claim that the new simulated demo is field-calibrated.
+
+## Classical adaptive controller
+
+`classical_adaptive` is a deterministic, queue-proportional baseline for the synthetic two-phase junction. At each complete cycle boundary it scores NS and EW as current halted/pending queue plus one cycle of past observed arrivals. It assigns the available green time in that ratio and clamps it to the existing configured bounds. Yellow and all-red phases remain produced exclusively by `phase_schedule`.
+
+Invalid simulation state uses the configured fixed NS split. Video traffic-state events must pass `src/simulation/traffic_state_adapter.py` before future integration; low-confidence, stale, missing or unmapped observations are ineligible and return a reason rather than silently controlling a signal.
